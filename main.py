@@ -60,7 +60,7 @@ def get_menu_choice():
 
 
 
-def modify_contact(cont):
+def modify_contact(contact):
     while True:
         print("\nModify Contact")
         print("1. First Name")
@@ -93,6 +93,57 @@ def modify_contact(cont):
     return contact
 
 
-def display_contacts(contact):
-    
+def display_contacts(contacts):
+    if not contacts:
+        print("No contacts found.")
+    else:
+        for i, contact in enumerate(contact):
+            print(f"{i + 1}. {contact.f_name} {contact.l_name} - {contact.phone}")
 
+
+def main():
+    contacts = read_file()
+
+    while True: 
+        choice = get_menu_choice
+
+        if choice == 1:
+             display_contacts(contacts)
+
+        elif choice == 2:
+            f = input("First Name: ")
+            l = input("Last Name: ")
+            p = input("Phone:")
+            a = input("Address:")
+            c = input("City:")
+            z = input("Zip:")
+
+            new_contact = contact(f,l,p,a,c,z)
+            contacts.append(new_contact)
+            contacts.sort(key = lambda c:(c.l_name, c.f_name))
+
+        elif choice == 3: 
+            display_contacts(contacts)
+            index = int(input("Select contact "))
+            if 0 <= index < len(contacts):
+                modify_contact(contacts[index])
+                contacts.sort(key=lambda c: (c.l_name, c.f_name))
+            else:
+                print("Invalid selection.")
+
+        elif choice == 4:
+            display_contacts(contacts)
+            index = int(input("Select contact number to delete"))
+            if 0 <= index < len(contacts):
+                contacts.pop(index)
+                print("Contact deleted.")
+            else:
+                print("Invalid Selection.")
+
+        elif choice == 5:
+            write_file(contacts)
+            print("Goodbye.")
+            break
+
+if __name__ == "__main__":
+    main()
