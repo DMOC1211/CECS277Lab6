@@ -5,6 +5,7 @@ Group: 12
 Description:
 '''
 
+import check_input
 from contact import Contact
 FILENAME = "addresses.txt"
 
@@ -51,14 +52,7 @@ def get_menu_choice():
     print("5. Save")
     print("6. Exit")
 
-    while True: 
-        try:
-            choice = int(input("Enter choice(1-6)"))
-            if 1 <= choice <= 6:
-                return choice
-        except ValueError:
-            pass
-        print("Invalid choice. Try again.")
+    return choice = check_input.get_int_range("Enter choice(1-6)", 1, 6)
 
 
 
@@ -80,13 +74,13 @@ def modify_contact(contact):
         elif choice == "2":
             contact._last_name = input("New Last Name:")
         elif choice == "3":
-            contact._phone_number = input("New Phone Number:")
+            contact._phone_number = check_input.get_positive_int("New Phone Number:")
         elif choice == "4":
             contact._address = input("New Address:")
         elif choice == "5":
             contact._city = input("New City:")
         elif choice == "6":
-            contact._zip_code = input("New zip:")
+            contact._zip_code = check_input.get_positive_int("New zip:")
         elif choice == "7":
             break
         else:
@@ -126,7 +120,7 @@ def main():
 
         elif choice == 3: 
             display_contacts(contacts)
-            index = int(input("Select contact ")) - 1
+            index = check_input.get_int_range("Select contact: ", 1, len(contacts)) - 1 
             if 0 <= index < len(contacts): 
                 modify_contact(contacts[index])
                 contacts.sort()
@@ -135,7 +129,7 @@ def main():
 
         elif choice == 4:
             display_contacts(contacts)
-            index = int(input("Select contact number to delete")) - 1
+            index = check_input.get_int_range("Select contact number to delete", 1, len(contacts)) - 1
             if 0 <= index < len(contacts):
                 contacts.pop(index)
                 print("Contact deleted.")
