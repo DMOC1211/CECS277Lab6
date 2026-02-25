@@ -135,7 +135,7 @@ def main():
 
         elif choice == 4:
             display_contacts(contacts)
-            index = int(input("Select contact number to delete"))
+            index = int(input("Select contact number to delete")) - 1
             if 0 <= index < len(contacts):
                 contacts.pop(index)
                 print("Contact deleted.")
