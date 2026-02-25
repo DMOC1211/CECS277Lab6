@@ -5,7 +5,7 @@ Group: 12
 Description:
 '''
 
-import contact
+from contact import Contact
 FILENAME = "addresses.txt"
 
 
@@ -18,15 +18,17 @@ def read_file():
                 line = line.strip()
                 if line:
                     data = line.split(",")
-                    contact = contact(
-                        data[0]
-                        data[1]
-                        data[2]
-                        data[3]
-                        data[4]
+                    c = Contact(
+                        data[0],
+                        data[1],
+                        data[2],
+                        data[3],
+                        data[4],
                         data[5]
                     )
-                    contacts.append(contact)
+                    
+                    contacts.append(c)
+                    
         contacts.sort(key=lambda c: (c.l_name, c.f_name))
 
     except FileNotFoundError:
@@ -74,17 +76,17 @@ def modify_contact(contact):
         choice = input("Choose field to modify")
 
         if choice == "1":
-            contact.f_name = input("New First Name:")
+            contact._first_name = input("New First Name:")
         elif choice == "2":
-            contact.l_name = input("New Last Name:")
+            contact._last_name = input("New Last Name:")
         elif choice == "3":
-            contact.phone = input("New Phone Number:")
+            contact._phone_number = input("New Phone Number:")
         elif choice == "4":
-            contact.address = input("New Address:")
+            contact._address = input("New Address:")
         elif choice == "5":
-            contact.city = input("New City:")
+            contact._city = input("New City:")
         elif choice == "6":
-            contact.zip = input("New zip:")
+            contact._zip_code = input("New zip:")
         elif choice == "7":
             break
         else:
@@ -97,15 +99,15 @@ def display_contacts(contacts):
     if not contacts:
         print("No contacts found.")
     else:
-        for i, contact in enumerate(contact):
-            print(f"{i + 1}. {contact.f_name} {contact.l_name} - {contact.phone}")
+        for i, c in enumerate(contact):
+            print(f"{i + 1}. {c._first_name} {c._last_name} - {c._phone_number}")
 
 
 def main():
     contacts = read_file()
 
     while True: 
-        choice = get_menu_choice
+        choice = get_menu_choice()
 
         if choice == 1:
              display_contacts(contacts)
@@ -118,7 +120,7 @@ def main():
             c = input("City:")
             z = input("Zip:")
 
-            new_contact = contact(f,l,p,a,c,z)
+            new_contact = Contact(f, l, p, a, c, z)
             contacts.append(new_contact)
             contacts.sort(key = lambda c:(c.l_name, c.f_name))
 
@@ -133,7 +135,7 @@ def main():
 
         elif choice == 4:
             display_contacts(contacts)
-            index = int(input("Select contact number to delete"))
+            index = int(input("Select contact number to delete")) - 1
             if 0 <= index < len(contacts):
                 contacts.pop(index)
                 print("Contact deleted.")
