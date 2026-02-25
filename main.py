@@ -29,7 +29,7 @@ def read_file():
                     
                     contacts.append(c)
                     
-        contacts.sort(key=lambda c: (c._last_name, c._first_name))
+        contacts.sort()
 
     except FileNotFoundError:
         pass    
@@ -122,14 +122,14 @@ def main():
 
             new_contact = Contact(f, l, p, a, c, z)
             contacts.append(new_contact)
-            contacts.sort(key = lambda c:(c._last_name, c._first_name))
+            contacts.sort()
 
         elif choice == 3: 
             display_contacts(contacts)
             index = int(input("Select contact ")) - 1
             if 0 <= index < len(contacts): 
                 modify_contact(contacts[index])
-                contacts.sort(key=lambda c: (c._last_name, c._first_name))
+                contacts.sort()
             else:
                 print("Invalid selection.")
 
