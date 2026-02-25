@@ -29,7 +29,7 @@ def read_file():
                     
                     contacts.append(c)
                     
-        contacts.sort(key=lambda c: (c.l_name, c.f_name))
+        contacts.sort(key=lambda c: (c._last_name, c._first_name))
 
     except FileNotFoundError:
         pass    
@@ -38,8 +38,8 @@ def read_file():
 
 def write_file(contacts):
     with open(FILENAME, "w") as file:
-        for contact in contacts:
-            file.write(repr(contact)+"\n")
+        for c in contacts:
+            file.write(repr(c)+"\n")
 
 
 def get_menu_choice():
@@ -67,7 +67,7 @@ def modify_contact(contact):
         print("\nModify Contact")
         print("1. First Name")
         print("2. Last Name")
-        print("3.Phone")
+        print("3. Phone")
         print("4. Address")
         print("5. City")
         print("6. Zip")
@@ -99,7 +99,7 @@ def display_contacts(contacts):
     if not contacts:
         print("No contacts found.")
     else:
-        for i, c in enumerate(contact):
+        for i, c in enumerate(contacts):
             print(f"{i + 1}. {c._first_name} {c._last_name} - {c._phone_number}")
 
 
@@ -122,20 +122,20 @@ def main():
 
             new_contact = Contact(f, l, p, a, c, z)
             contacts.append(new_contact)
-            contacts.sort(key = lambda c:(c.l_name, c.f_name))
+            contacts.sort(key = lambda c:(c._last_name, c._first_name))
 
         elif choice == 3: 
             display_contacts(contacts)
-            index = int(input("Select contact "))
-            if 0 <= index < len(contacts):
+            index = int(input("Select contact ")) - 1
+            if 0 <= index < len(contacts): 
                 modify_contact(contacts[index])
-                contacts.sort(key=lambda c: (c.l_name, c.f_name))
+                contacts.sort(key=lambda c: (c._last_name, c._first_name))
             else:
                 print("Invalid selection.")
 
         elif choice == 4:
             display_contacts(contacts)
-            index = int(input("Select contact number to delete")) - 1
+            index = int(input("Select contact number to delete"))
             if 0 <= index < len(contacts):
                 contacts.pop(index)
                 print("Contact deleted.")
