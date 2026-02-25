@@ -52,7 +52,7 @@ def get_menu_choice():
     print("5. Save")
     print("6. Exit")
 
-    return choice = check_input.get_int_range("Enter choice(1-6)", 1, 6)
+    return check_input.get_int_range("Enter choice(1-6)", 1, 6)
 
 
 
